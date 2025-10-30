@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  main:
+    banner-mode: "off"
+  webflux:
+    base-path: /
+
+app:
+  # Vereinfachung: wir nehmen vorerst eine feste Zeitzone (später per Geo ableiten)
+  timezone: Europe/Berlin

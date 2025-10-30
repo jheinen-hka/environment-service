@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class EnvironmentServiceApplication
+class ContextApplication
 
 fun main(args: Array<String>) {
-    runApplication<EnvironmentServiceApplication>(*args)
+    runApplication<ContextApplication>(*args)
 }
