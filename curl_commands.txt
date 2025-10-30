@@ -1,0 +1,27 @@
+# 1) Health-Check
+curl -s http://localhost:8080/health
+
+# 2) Snapshot ohne Hint (Default: Berlin)
+curl -s http://localhost:8080/context | jq
+
+# 3) Snapshot mit Location per Query-Param (München)
+curl -s "http://localhost:8080/context?lat=48.137&lon=11.575&city=Muenchen&countryCode=DE" | jq
+
+# 4) Snapshot via POST mit Location-Hint (Karlsruhe)
+curl -s -X POST http://localhost:8080/context \
+  -H "Content-Type: application/json" \
+  -d '{"locationHint":{"city":"Karlsruhe","countryCode":"DE","lat":49.0069,"lon":8.4037}}' | jq
+
+# 5) Snapshot mit Accept-Language (Deutsch)
+curl -s -H "Accept-Language: de-DE" http://localhost:8080/context | jq
+
+# 6) Delta-Flow Beispiel
+# 6a) Snapshot holen & Hash speichern
+H=$(curl -s http://localhost:8080/context | jq -r .hash)
+echo $H
+
+# 6b) Delta ohne Änderung (data leer)
+curl -s "http://localhost:8080/context/delta?sinceHash=$H" | jq
+
+# 6c) Delta mit geändertem Ort (München)
+curl -s "http://localhost:8080/context/delta?sinceHash=$H&lat=48.137&lon=11.575&city=Muenchen&countryCode=DE" | jq
